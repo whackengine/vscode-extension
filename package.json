@@ -17,6 +17,19 @@
         "command": "whack-engine.helloWorld",
         "title": "Hello World"
       }
+    ],
+    "languages": [
+      {
+        "id": "as3",
+        "extensions": [".as"]
+      }
+    ],
+    "grammars": [
+      {
+        "language": "as3",
+        "scopeName": "source.as3",
+        "path": "./syntaxes/as3.tmLanguage.json"
+      }
     ]
   },
   "scripts": {
