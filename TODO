@@ -4,9 +4,12 @@ https://github.com/hydroperfox/tmlangyaml2json
 
 https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
 
+# Semantic token provider
+
 Semantic Token Provider (in addition to TextMate highlighting)
 
-- [ ] Highlight parameters in function expressions
+- [ ] Highlight constructor name
+- [ ] Highlight parameter names in function expressions
 - [ ] Highlight ASDoc tags
 
 # AS3 highlighter
@@ -17,7 +20,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [x] Block
   - [ ] Definitions
     - [x] Variable
-    - [ ] Function
+    - [x] Function
       - [ ] Getter
       - [ ] Setter
     - [ ] Class (possibly parameterized)
@@ -57,7 +60,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
     - [ ] `this`
     - [ ] `import.meta`
     - [ ] Vector `new [T] { ... }`
-    - [ ] Function `function(...):T` or `function name(...):T` (here parameters should not be highlighted as parameters, since it may also be a function type)
+    - [x] Function `function(...)` or `function name(...)` (here parameters should not be highlighted as parameters, since it may also be a function type)
     - [ ] `new`
     - [ ] `super`
     - [ ] `delete`

@@ -47,10 +47,14 @@
                         }
                     ],
                     "beginCaptures": {
-                        "0": "punctuation.definition.block"
+                        "0": {
+                            "name": "punctuation.definition.block"
+                        }
                     },
                     "endCaptures": {
-                        "0": "punctuation.definition.block"
+                        "0": {
+                            "name": "punctuation.definition.block"
+                        }
                     }
                 },
                 {
@@ -60,6 +64,36 @@
                             "name": "keyword.other"
                         }
                     }
+                },
+                {
+                    "begin": "(?x) \\b(function) \\s+ (get|set) \\s+ ((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* )) \\s* \\(",
+                    "end": "\\)",
+                    "patterns": [
+                        {
+                            "include": "#parameterList"
+                        }
+                    ],
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other"
+                        },
+                        "2": {
+                            "name": "keyword.other"
+                        },
+                        "3": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "include": "#expression"
+                }
+            ]
+        },
+        "expression": {
+            "patterns": [
+                {
+                    "include": "#comment"
                 },
                 {
                     "begin": "(?x) \\b (var|const) \\s* \\{",
@@ -101,18 +135,55 @@
                     }
                 },
                 {
-                    "include": "#expression"
+                    "match": "(?x) \\b(var|const)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other"
+                        }
+                    }
+                },
+                {
+                    "begin": "(?x) \\b(function) \\s+ ((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* )) \\s* \\(",
+                    "end": ")",
+                    "patterns": [
+                        {
+                            "include": "#parameterList"
+                        }
+                    ],
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                },
+                {
+                    "match": "(?x) \\b(function)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other"
+                        }
+                    }
                 }
             ]
         },
-        "expression": {
+        "parameterList": {
             "patterns": [
                 {
                     "include": "#comment"
                 },
                 {
-                    "name": "keyword.other",
-                    "match": "\\bspecial\\b"
+                    "match": "(?x) (?<[,(]\\s*)((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* ))",
+                    "captures": {
+                        "1": {
+                            "name": "variable.parameter"
+                        }
+                    }
+                },
+                {
+                    "include": "#expression"
                 }
             ]
         },

@@ -64,6 +64,16 @@ repository:
           (?x) \b  (   (?:\s*{{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?=class|enum|interface|type|namespace|var|const|function)\b
         captures:
           1: { name: keyword.other }
+      # Getter or setter
+      - begin: >-
+          (?x) \b(function) \s+ (get|set) \s+ ({{id}}) \s* \(
+        end: \)
+        captures:
+          1: { name: keyword.other }
+          2: { name: keyword.other }
+          3: { name: entity.name.function }
+        patterns:
+          - include: '#parameterList'
 
       - include: '#expression'
 
@@ -93,6 +103,32 @@ repository:
         captures:
           1: { name: keyword.other }
           2: { name: entity.name.other }
+      - match: >-
+          (?x) \b(var|const)\b
+        captures:
+          1: { name: keyword.other }
+      # Function
+      - begin: >-
+          (?x) \b(function) \s+ ({{id}}) \s* \(
+        end: \)
+        captures:
+          1: { name: keyword.other }
+          2: { name: entity.name.function }
+        patterns:
+          - include: '#parameterList'
+      - match: >-
+          (?x) \b(function)\b
+        captures:
+          1: { name: keyword.other }
+
+  parameterList:
+    patterns:
+      - include: '#comment'
+      - match: >-
+          (?x) (?<[,(]\s*)({{id}})
+        captures:
+          1: { name: variable.parameter }
+      - include: '#expression'
 
   object:
     patterns:
