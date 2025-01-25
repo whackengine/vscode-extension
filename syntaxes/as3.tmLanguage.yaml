@@ -74,6 +74,56 @@ repository:
           3: { name: entity.name.function }
         patterns:
           - include: '#parameterList'
+      # Class
+      - match: >-
+          (?x) \b(class) \s+ ({{id}})
+        captures:
+          1: { name: keyword.other }
+          2: { name: entity.name.type.class }
+      - match: >-
+          (?x) \b(class)\b
+        captures:
+          1: { name: keyword.other }
+      # Enum
+      - match: >-
+          (?x) \b(enum) \s+ ({{id}})
+        captures:
+          1: { name: keyword.other }
+          2: { name: entity.name.type.enum }
+      - match: >-
+          (?x) \b(enum)\b
+        captures:
+          1: { name: keyword.other }
+      # Interface
+      - match: >-
+          (?x) \b(interface) \s+ ({{id}})
+        captures:
+          1: { name: keyword.other }
+          2: { name: entity.name.type.interface }
+      - match: >-
+          (?x) \b(interface)\b
+        captures:
+          1: { name: keyword.other }
+      # Type
+      - match: >-
+          (?x) \b(type) \s+ ({{id}})
+        captures:
+          1: { name: keyword.other }
+          2: { name: entity.name.type }
+      - match: >-
+          (?x) \b(type)\b
+        captures:
+          1: { name: keyword.other }
+      # Namespace
+      - match: >-
+          (?x) \b(namespace) \s+ ({{id}})
+        captures:
+          1: { name: keyword.other }
+          2: { name: entity.name.type }
+      - match: >-
+          (?x) \b(namespace)\b
+        captures:
+          1: { name: keyword.other }
 
       - include: '#expression'
 

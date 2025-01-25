@@ -18,20 +18,10 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [x] Package (`package f.q` or just `package`)
   - [x] Label (identifier followed by colon)
   - [x] Block
-  - [ ] Definitions
-    - [x] Variable
-    - [x] Function
-      - [x] Getter
-      - [x] Setter
-    - [ ] Class (possibly parameterized)
-      - [ ] `extends`
-      - [ ] `implements`
-    - [ ] Enum
-    - [ ] Interface (possibly parameterized)
-      - [ ] `extends`
-    - [ ] Type
-    - [ ] Namespace
+  - [x] Definitions
   - [ ] Keywords
+    - [ ] `extends`
+    - [ ] `implements`
     - [ ] `if`
     - [ ] `else`
     - [ ] `for each`
@@ -43,6 +33,9 @@ Semantic Token Provider (in addition to TextMate highlighting)
     - [ ] `return`
     - [ ] `throw`
     - [ ] `default xml namespace`
+    - [ ] `switch type`
+    - [ ] `switch`
+    - [ ] `case`
     - [ ] `try`
     - [ ] `catch` (followed by a parenthesized binding that is an optionally typed pattern)
     - [ ] `finally`
@@ -94,7 +87,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [ ] Colon `:`
   - [ ] Object `{ ... }`
     - [ ] Enter context and highlight names more carefully since keywords are allowed 
-  - [ ] Apply type `.<...>`
+  - [ ] Apply type or parameterized type `.<...>`
   - [ ] Dot `.` followed by simple identifier
   - [ ] Dot `.`
   - [ ] Attribute `@`
