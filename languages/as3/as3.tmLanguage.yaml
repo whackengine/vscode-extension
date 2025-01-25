@@ -29,6 +29,9 @@ variables:
   keywordAttribute: >-
     (?:(?x) public | private | protected | internal | final | static | dynamic | override | abstract)
 
+  definitionKeyword: >-
+    class|enum|interface|type|namespace|var|const|function|extends|implements
+
 patterns:
   - include: '#directive'
 
@@ -61,7 +64,7 @@ repository:
           - include: '#directive'
       # Annotatable definition attributes
       - match: >-
-          (?x) \b  (   (?:\s*{{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?=class|enum|interface|type|namespace|var|const|function)\b
+          (?x) \b  (   (?:\s*(?!{{definitionKeyword}}\b){{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?={{definitionKeyword}})\b
         captures:
           1: { name: keyword.other }
       # Getter or setter
