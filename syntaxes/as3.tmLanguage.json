@@ -224,12 +224,27 @@
             "patterns": [
                 {
                     "name": "comment.line",
-                    "match": "(?x) //(.*)"
+                    "match": "(?x) (//)(.*)",
+                    "captures": {
+                        "1": {
+                            "name": "punctuation.definition.comment"
+                        }
+                    }
                 },
                 {
                     "name": "comment.block",
-                    "begin": "/\\*",
-                    "end": "\\*/"
+                    "begin": "(/\\*)",
+                    "end": "(\\*/)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.comment"
+                        }
+                    },
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.definition.comment"
+                        }
+                    }
                 }
             ]
         }

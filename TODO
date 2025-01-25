@@ -21,8 +21,8 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [ ] Definitions
     - [x] Variable
     - [x] Function
-      - [ ] Getter
-      - [ ] Setter
+      - [x] Getter
+      - [x] Setter
     - [ ] Class (possibly parameterized)
       - [ ] `extends`
       - [ ] `implements`
