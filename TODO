@@ -16,9 +16,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [x] Label (identifier followed by colon)
   - [x] Block
   - [ ] Definitions
-    - Definitions are possibly preceded by zero or more attributes
-      - Examples: `static a.q var x`, or just `var x`
-    - [ ] Variable
+    - [x] Variable
     - [ ] Function
       - [ ] Getter
       - [ ] Setter
@@ -50,7 +48,8 @@ Semantic Token Provider (in addition to TextMate highlighting)
     - [ ] `public +=` (followed by a package name possibly ending with `.*` or `.**`)
   - [ ] Expression
 - [ ] Expression
-  - [ ] Variable binding (`var` or `const` followed by a optionally typed pattern) 
+  - [x] Comments
+  - [x] Variable binding (`var` or `const` followed by pattern) 
   - [ ] Keywords
     - [ ] `null`
     - [ ] `false`
@@ -90,7 +89,8 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [ ] Punctuator `...`
   - [ ] Comma `,`
   - [ ] Colon `:`
-  - [ ] Brace-group `{ ... }`
+  - [ ] Object `{ ... }`
+    - [ ] Enter context and highlight names more carefully since keywords are allowed 
   - [ ] Apply type `.<...>`
   - [ ] Dot `.` followed by simple identifier
   - [ ] Dot `.`

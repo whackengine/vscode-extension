@@ -60,6 +60,108 @@
                             "name": "keyword.other"
                         }
                     }
+                },
+                {
+                    "begin": "(?x) \\b (var|const) \\s* \\{",
+                    "end": "\\}(\\s*!)?",
+                    "patterns": [
+                        {
+                            "include": "#object"
+                        }
+                    ],
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other"
+                        }
+                    }
+                },
+                {
+                    "begin": "(?x) \\b (var|const) \\s* \\[",
+                    "end": "\\](\\s*!)?",
+                    "patterns": [
+                        {
+                            "include": "#array"
+                        }
+                    ],
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other"
+                        }
+                    }
+                },
+                {
+                    "match": "(?x) \\b (var|const) \\s+ ((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* ))\\b",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other"
+                        },
+                        "2": {
+                            "name": "entity.name.other"
+                        }
+                    }
+                },
+                {
+                    "include": "#expression"
+                }
+            ]
+        },
+        "expression": {
+            "patterns": [
+                {
+                    "include": "#comment"
+                },
+                {
+                    "name": "keyword.other",
+                    "match": "\\bspecial\\b"
+                }
+            ]
+        },
+        "object": {
+            "patterns": [
+                {
+                    "begin": "(?x) ((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* )) \\s* :",
+                    "end": "(?x) [,}]",
+                    "patterns": [
+                        {
+                            "include": "#expression"
+                        }
+                    ],
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.other"
+                        }
+                    }
+                },
+                {
+                    "match": "(?x) ((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* ))",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.other"
+                        }
+                    }
+                },
+                {
+                    "include": "#expression"
+                }
+            ]
+        },
+        "array": {
+            "patterns": [
+                {
+                    "include": "#expression"
+                }
+            ]
+        },
+        "comment": {
+            "patterns": [
+                {
+                    "name": "comment.line",
+                    "match": "(?x) //(.*)"
+                },
+                {
+                    "name": "comment.block",
+                    "begin": "/\\*",
+                    "end": "\\*/"
                 }
             ]
         }

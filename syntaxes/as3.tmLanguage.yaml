@@ -64,3 +64,64 @@ repository:
           (?x) \b  (   (?:\s*{{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?=class|enum|interface|type|namespace|var|const|function)\b
         captures:
           1: { name: keyword.other }
+
+      - include: '#expression'
+
+  expression:
+    patterns:
+      - include: '#comment'
+
+      # Variable definition (object destructuring)
+      - begin: >-
+          (?x) \b (var|const) \s* \{
+        end: \}(\s*!)?
+        captures:
+          1: { name: keyword.other }
+        patterns:
+          - include: '#object'
+      # Variable definition (array destructuring)
+      - begin: >-
+          (?x) \b (var|const) \s* \[
+        end: \](\s*!)?
+        captures:
+          1: { name: keyword.other }
+        patterns:
+          - include: '#array'
+      # Variable definition (non destructuring)
+      - match: >-
+          (?x) \b (var|const) \s+ ({{id}})\b
+        captures:
+          1: { name: keyword.other }
+          2: { name: entity.name.other }
+
+  object:
+    patterns:
+      - begin: >-
+          (?x) ({{id}}) \s* :
+        end: >-
+          (?x) [,}]
+        captures:
+          1: { name: entity.name.other }
+        patterns:
+          - include: '#expression'
+
+      # Shorthand
+      - match: >-
+          (?x) ({{id}})
+        captures:
+          1: { name: entity.name.other }
+
+      - include: '#expression'
+  
+  array:
+    patterns:
+      - include: '#expression'
+
+  comment:
+    patterns:
+      - match: >-
+          (?x) //(.*)
+        name: comment.line
+      - begin: /\*
+        end: \*/
+        name: comment.block
