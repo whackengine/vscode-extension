@@ -19,8 +19,11 @@ https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
       - [ ] Getter
       - [ ] Setter
     - [ ] Class (possibly parameterized)
+      - [ ] `extends`
+      - [ ] `implements`
     - [ ] Enum
     - [ ] Interface (possibly parameterized)
+      - [ ] `extends`
     - [ ] Type
     - [ ] Namespace
   - [ ] Keywords
@@ -31,6 +34,7 @@ https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
     - [ ] `break` (optionally followed by a label)
     - [ ] `continue` (optionally followed by a label)
     - [ ] `with`
+    - [ ] `return` followed by regexp
     - [ ] `return`
     - [ ] `throw`
     - [ ] `default xml namespace`
@@ -84,6 +88,7 @@ https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
   - [ ] Colon `:`
   - [ ] Brace-group `{ ... }`
   - [ ] Apply type `.<...>`
+  - [ ] Dot `.` followed by simple identifier
   - [ ] Dot `.`
   - [ ] Attribute `@`
   - [ ] Descendants `..`
@@ -117,3 +122,5 @@ https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
   - [ ] `&`
   - [ ] `^`
   - [ ] `|`
+  - [ ] `\uXXXX`
+  - [ ] `\u{...}`
