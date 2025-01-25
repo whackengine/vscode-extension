@@ -11,7 +11,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
 # AS3 highlighter
 
 - [ ] Directive
-  - [ ] Package (`package f.q` or just `package`)
+  - [x] Package (`package f.q` or just `package`)
   - [ ] Semicolon
   - [ ] Label (identifier followed by colon)
   - [ ] Block

@@ -4,11 +4,36 @@ name: ActionScript 3
 scopeName: source.as3
 
 variables:
-  someVar: 'xxx'
+  unicodeEscape: >-
+    (?:(?x) \\u((\{[A-Fa-f0-9]+\})|[A-Fa-f0-9]{4}))
+  idStart: >-
+    (?:(?x) [\p{L}$_\p{Nl}] | {{unicodeEscape}})
+  idPart: >-
+    (?:(?x) [\p{L}$_\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}] | {{unicodeEscape}})
+
+  # Based on https://github.com/microsoft/TypeScript-TmLanguage
+  decimalNumber: |-
+    (?<!\$)(?:
+      (?:\b[0-9][0-9_]*(\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*([f|F])?\b)| # 1.1E+3
+      (?:\b[0-9][0-9_]*(\.)[eE][+-]?[0-9][0-9_]*([f|F])?\b)|             # 1.E+3
+      (?:\B(\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*([f|F])?\b)|             # .1E+3
+      (?:\b[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*([f|F])?\b)|                 # 1E+3
+      (?:\b[0-9][0-9_]*(\.)[0-9][0-9_]*([f|F])?\b)|                      # 1.1
+      (?:\b[0-9][0-9_]*(\.)([f|F])?\B)|                                  # 1.
+      (?:\B(\.)[0-9][0-9_]*([f|F])?\b)|                                  # .1
+      (?:\b[0-9][0-9_]*([f|F])?\b(?!\.))                                 # 1
+    )(?!\$)
 
 patterns:
-  - include: '#foo'
+  - include: '#directive'
 
 repository:
-  foo:
-    patterns: []
+  directive:
+    patterns:
+      - match: (?x) \b(package) \s* ({{idStart}}{{idPart}}* \s* (\s*\.\s*{{idStart}}{{idPart}}*)*)\b
+        captures:
+          1: { name: keyword.other }
+          2: { name: entity.name }
+      - match: (?x) \b(package)\b
+        captures:
+          1: { name: keyword.other }
