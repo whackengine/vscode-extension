@@ -52,6 +52,14 @@
                     "endCaptures": {
                         "0": "punctuation.definition.block"
                     }
+                },
+                {
+                    "match": "(?x) \\b  (   (?:\\s*(?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* )(?:\\s*\\.\\s*(?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* ))*)+   )  \\s*  (?=class|enum|interface|type|namespace|var|const|function)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.other"
+                        }
+                    }
                 }
             ]
         }

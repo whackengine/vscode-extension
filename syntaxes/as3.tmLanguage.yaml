@@ -26,6 +26,9 @@ variables:
       (?:\b[0-9][0-9_]*([f|F])?\b(?!\.))                                 # 1
     )(?!\$)
 
+  keywordAttribute: >-
+    (?:(?x) public | private | protected | internal | final | static | dynamic | override | abstract)
+
 patterns:
   - include: '#directive'
 
@@ -56,3 +59,8 @@ repository:
         name: expression.group
         patterns:
           - include: '#directive'
+      # Annotatable definition attributes
+      - match: >-
+          (?x) \b  (   (?:\s*{{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?=class|enum|interface|type|namespace|var|const|function)\b
+        captures:
+          1: { name: keyword.other }
