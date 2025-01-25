@@ -6,6 +6,8 @@ https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
 
 Semantic Token Provider (in addition to TextMate highlighting)
 
+- [ ] Highlight parameters in function expressions
+
 # AS3 highlighter
 
 - [ ] Directive
