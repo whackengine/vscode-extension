@@ -21,7 +21,16 @@
     "languages": [
       {
         "id": "as3",
-        "extensions": [".as"]
+        "extensions": [".as"],
+        "aliases": [
+          "ActionScript 3",
+          "ActionScript",
+          "AS3",
+          "AS",
+          "as3",
+          "as"
+        ],
+        "configuration": "./actionscript.configuration.json"
       }
     ],
     "grammars": [
