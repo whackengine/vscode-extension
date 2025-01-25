@@ -30,7 +30,7 @@ variables:
     (?:(?x) public | private | protected | internal | final | static | dynamic | override | abstract)
 
   definitionKeyword: >-
-    class|enum|interface|type|namespace|var|const|function|extends|implements
+    class|enum|interface|type|namespace|var|const|function|extends|implements|default\s+xml\s+namespace
 
 patterns:
   - include: '#directive'
@@ -135,7 +135,7 @@ repository:
       - match: \b(with)\b
         name: keyword.other
       # default xml namespace =
-      - match: \b(default\s+xml\s+namespace)\s+(=)\b
+      - match: \b(default\s+xml\s+namespace)\s*(=)
         captures:
           1: { name: keyword.other }
       # import or include
