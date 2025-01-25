@@ -53,9 +53,9 @@ repository:
       - begin: \{
         end: \}
         beginCaptures:
-          0: punctuation.definition.block
+          0: { name: punctuation.definition.block }
         endCaptures:
-          0: punctuation.definition.block
+          0: { name: punctuation.definition.block }
         name: expression.group
         patterns:
           - include: '#directive'
