@@ -4,6 +4,8 @@ https://github.com/hydroperfox/tmlangyaml2json
 
 https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
 
+Semantic Token Provider (in addition to TextMate highlighting)
+
 # AS3 highlighter
 
 - [ ] Directive
