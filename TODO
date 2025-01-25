@@ -11,38 +11,10 @@ Semantic Token Provider (in addition to TextMate highlighting)
 - [ ] Highlight constructor name
 - [ ] Highlight parameter names in function expressions
 - [ ] Highlight ASDoc tags
+- [ ] Highlight import names
 
 # AS3 highlighter
 
-- [ ] Directive
-  - [x] Package (`package f.q` or just `package`)
-  - [x] Label (identifier followed by colon)
-  - [x] Block
-  - [x] Definitions
-  - [ ] Keywords
-    - [ ] `extends`
-    - [ ] `implements`
-    - [ ] `if`
-    - [ ] `else`
-    - [ ] `for each`
-    - [ ] `for`
-    - [ ] `break` (optionally followed by a label)
-    - [ ] `continue` (optionally followed by a label)
-    - [ ] `with`
-    - [ ] `return` followed by regexp
-    - [ ] `return`
-    - [ ] `throw`
-    - [ ] `default xml namespace`
-    - [ ] `switch type`
-    - [ ] `switch`
-    - [ ] `case`
-    - [ ] `try`
-    - [ ] `catch` (followed by a parenthesized binding that is an optionally typed pattern)
-    - [ ] `finally`
-    - [ ] `import` (followed by a package name possibly ending with `.*` or `.**`)
-    - [ ] `include` (followed by string literal)
-    - [ ] `public +=` (followed by a package name possibly ending with `.*` or `.**`)
-  - [ ] Expression
 - [ ] Expression
   - [x] Comments
   - [x] Variable binding (`var` or `const` followed by pattern) 
@@ -76,7 +48,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [ ] Numeric literal
   - [ ] Parenthesized `(...)`
   - [ ] String literal
-  - [ ] Reg exp literal (if either in the beginning of file, or preceded by one of (`:`, `=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `~`, `&`, `^`, `|`, `<`, `>`) possibly between whitespace `\s*`)
+  - [ ] Reg exp literal (if either in the beginning of file after any optional whitespace, or preceded by one of (`:`, `=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `~`, `&`, `^`, `|`, `<`, `>`) possibly between whitespace `\s*`)
   - [ ] XML
   - [ ] XML markup (comment, CDATA or processing-instruction)
   - [ ] XML list
@@ -122,5 +94,3 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [ ] `&`
   - [ ] `^`
   - [ ] `|`
-  - [ ] `\uXXXX`
-  - [ ] `\u{...}`

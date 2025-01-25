@@ -48,7 +48,7 @@ repository:
       - match: >-
           (?x) \b({{id}})\s*:(?!:)
         captures:
-          1: { name: entity.name.other }
+          1: { name: entity.name.label }
       # Block
       - begin: \{
         end: \}
@@ -112,6 +112,32 @@ repository:
         captures:
           1: { name: keyword.other }
           2: { name: entity.name.other }
+      # `extends` and `implements` keywords
+      - match: \b(extends|implements)\b
+        name: keyword.other
+      # `return` followed by regex
+      - begin: \b(return)\s*(/)
+        end: >-
+          (?x) /[A-Za-z]*\b
+        name: string.regexp
+      # `break` and `continue`
+      - match: \b(break|continue)(\s+{{id}})?
+        captures:
+          1: keyword.control
+          2: entity.name.label
+      # Various control keywords
+      - match: \b(if|else|for\s+each|for|return|throw|switch\s+type|switch|case|try|catch|finally)\b
+        name: keyword.control
+      # with
+      - match: \b(with)\b
+        name: keyword.other
+      # default xml namespace =
+      - match: \b(default\s+xml\s+namespace)\s+(=)\b
+        captures:
+          1: { name: keyword.other }
+      # import or include
+      - match: \b(import|include)\b
+        name: keyword.other
 
       - include: '#expression'
 
@@ -156,8 +182,10 @@ repository:
           - include: '#parameterList'
       - match: >-
           (?x) \b(function)\b
-        captures:
-          1: { name: keyword.other }
+        name: keyword.other
+      # Reserved namespaces
+      - match: \b(public|private|protected|internal)\b
+        name: keyword.other
 
   parameterList:
     patterns:
@@ -187,6 +215,11 @@ repository:
   array:
     patterns:
       - include: '#expression'
+
+  regex:
+    patterns:
+      - match: >-
+          (?x) \.
 
   comment:
     patterns:
