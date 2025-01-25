@@ -16,9 +16,9 @@ https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
       - Examples: `static a.q var x`, or just `var x`
     - [ ] Variable
     - [ ] Function
-    - [ ] Class
+    - [ ] Class (possibly parameterized)
     - [ ] Enum
-    - [ ] Interface
+    - [ ] Interface (possibly parameterized)
     - [ ] Type
     - [ ] Namespace
   - [ ] Keywords
@@ -46,103 +46,72 @@ https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
     - [ ] `false`
     - [ ] `true`
     - [ ] `this`
-  - [ ] Qualified identifier (complex)
-  - [ ] Simple identifier
+    - [ ] `import.meta`
+    - [ ] Vector `new [T] { ... }`
+    - [ ] Function `function(...):T` or `function name(...):T` (here parameters should not be highlighted as parameters, since it may also be a function type)
+    - [ ] `new`
+    - [ ] `super`
+    - [ ] `delete`
+    - [ ] `void`
+    - [ ] `typeof`
+    - [ ] `await`
+    - [ ] `yield`
+    - [ ] `instanceof`
+    - [ ] `in`
+    - [ ] `not in`
+    - [ ] `is not`
+    - [ ] `is`
+    - [ ] `as`
+    - [ ] `public`
+    - [ ] `private`
+    - [ ] `protected`
+    - [ ] `internal`
+  - [ ] Punctuator `::`
+  - [ ] Identifier
   - [ ] Numeric literal
-  - [ ] Semicolon
-  - [ ] Parenthesized
+  - [ ] Parenthesized `(...)`
   - [ ] String literal
-  - [ ] Reg exp literal (if either in the beginning of file, or preceded by one of (`=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `&`, `^`, `|`, `<`, `>`), or not preceded by identifier)
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
-  - [ ] 
+  - [ ] Reg exp literal (if either in the beginning of file, or preceded by one of (`:`, `=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `~`, `&`, `^`, `|`, `<`, `>`) possibly between whitespace `\s*`)
+  - [ ] XML
+  - [ ] XML markup (comment, CDATA or processing-instruction)
+  - [ ] XML list
+  - [ ] Semicolon `;`
+  - [ ] Square-group `[...]`
+  - [ ] Punctuator `...`
+  - [ ] Comma `,`
+  - [ ] Colon `:`
+  - [ ] Brace-group `{ ... }`
+  - [ ] Apply type `.<...>`
+  - [ ] Dot `.`
+  - [ ] Attribute `@`
+  - [ ] Descendants `..`
+  - [ ] Question `?`
+  - [ ] Increment `++`
+  - [ ] Decrement `--`
+  - [ ] Exclamation mark `!`
+  - [ ] Plus `+`
+  - [ ] Minus `-`
+  - [ ] Bitwise not `~`
+  - [ ] Power `**`
+  - [ ] Times `*`
+  - [ ] Divide `/`
+  - [ ] Remainder `%`
+  - [ ] Shift-left `<<`
+  - [ ] Shift-right unsigned `>>>`
+  - [ ] Shift-right `>>`
+  - [ ] Less-than or equals `<=`
+  - [ ] Less-than `<`
+  - [ ] Greater-than or equals `>=`
+  - [ ] Greater-than `>`
+  - [ ] `===`
+  - [ ] `==`
+  - [ ] `!==`
+  - [ ] `!=`
+  - [ ] `=`
+  - [ ] `&&`
+  - [ ] `^^`
+  - [ ] `||`
+  - [ ] `??`
+  - [ ] `&`
+  - [ ] `^`
+  - [ ] `|`
