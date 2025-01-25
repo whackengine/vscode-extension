@@ -12,8 +12,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
 
 - [ ] Directive
   - [x] Package (`package f.q` or just `package`)
-  - [ ] Semicolon
-  - [ ] Label (identifier followed by colon)
+  - [x] Label (identifier followed by colon)
   - [ ] Block
   - [ ] Definitions
     - Definitions are possibly preceded by zero or more attributes

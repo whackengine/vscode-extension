@@ -17,7 +17,7 @@
                             "name": "keyword.other"
                         },
                         "2": {
-                            "name": "keyword.other"
+                            "name": "entity.name.other"
                         }
                     }
                 },
@@ -26,6 +26,14 @@
                     "captures": {
                         "1": {
                             "name": "keyword.other"
+                        }
+                    }
+                },
+                {
+                    "match": "(?x) \\b((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* ))\\s*:(?!:)",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.other"
                         }
                     }
                 }
