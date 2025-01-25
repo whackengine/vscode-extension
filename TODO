@@ -16,6 +16,8 @@ https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
       - Examples: `static a.q var x`, or just `var x`
     - [ ] Variable
     - [ ] Function
+      - [ ] Getter
+      - [ ] Setter
     - [ ] Class (possibly parameterized)
     - [ ] Enum
     - [ ] Interface (possibly parameterized)
