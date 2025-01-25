@@ -144,7 +144,7 @@
                 },
                 {
                     "begin": "(?x) \\b(function) \\s+ ((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* )) \\s* \\(",
-                    "end": ")",
+                    "end": "\\)",
                     "patterns": [
                         {
                             "include": "#parameterList"
@@ -172,10 +172,7 @@
         "parameterList": {
             "patterns": [
                 {
-                    "include": "#comment"
-                },
-                {
-                    "match": "(?x) (?<[,(]\\s*)((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* ))",
+                    "match": "(?x) (?<=[,(] \\s*) ((?:(?x) (?:(?x) [\\p{L}$_\\p{Nl}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4}))) (?:(?x) [\\p{L}$_\\p{Nl}\\p{Mn}\\p{Mc}\\p{Nd}\\p{Pc}] | (?:(?x) \\\\u((\\{[A-Fa-f0-9]+\\})|[A-Fa-f0-9]{4})))* ))",
                     "captures": {
                         "1": {
                             "name": "variable.parameter"

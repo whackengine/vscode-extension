@@ -123,9 +123,8 @@ repository:
 
   parameterList:
     patterns:
-      - include: '#comment'
       - match: >-
-          (?x) (?<[,(]\s*)({{id}})
+          (?x) (?<=[,(] \s*) ({{id}})
         captures:
           1: { name: variable.parameter }
       - include: '#expression'
