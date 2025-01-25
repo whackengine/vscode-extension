@@ -36,6 +36,22 @@
                             "name": "entity.name.other"
                         }
                     }
+                },
+                {
+                    "name": "expression.group",
+                    "begin": "\\{",
+                    "end": "\\}",
+                    "patterns": [
+                        {
+                            "include": "#directive"
+                        }
+                    ],
+                    "beginCaptures": {
+                        "0": "punctuation.definition.block"
+                    },
+                    "endCaptures": {
+                        "0": "punctuation.definition.block"
+                    }
                 }
             ]
         }

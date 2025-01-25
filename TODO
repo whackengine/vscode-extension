@@ -13,7 +13,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
 - [ ] Directive
   - [x] Package (`package f.q` or just `package`)
   - [x] Label (identifier followed by colon)
-  - [ ] Block
+  - [x] Block
   - [ ] Definitions
     - Definitions are possibly preceded by zero or more attributes
       - Examples: `static a.q var x`, or just `var x`
