@@ -3,3 +3,146 @@
 https://github.com/hydroperfox/tmlangyaml2json
 
 https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
+
+# AS3 highlighter
+
+- [ ] Directive
+  - [ ] Package (`package f.q` or just `package`)
+  - [ ] Semicolon
+  - [ ] Label (identifier followed by colon)
+  - [ ] Block
+  - [ ] Definitions
+    - Definitions are possibly preceded by zero or more attributes
+      - Examples: `static a.q var x`, or just `var x`
+    - [ ] Variable
+    - [ ] Function
+    - [ ] Class
+    - [ ] Enum
+    - [ ] Interface
+    - [ ] Type
+    - [ ] Namespace
+  - [ ] Keywords
+    - [ ] `if`
+    - [ ] `else`
+    - [ ] `for each`
+    - [ ] `for`
+    - [ ] `break` (optionally followed by a label)
+    - [ ] `continue` (optionally followed by a label)
+    - [ ] `with`
+    - [ ] `return`
+    - [ ] `throw`
+    - [ ] `default xml namespace`
+    - [ ] `try`
+    - [ ] `catch` (followed by a parenthesized binding that is an optionally typed pattern)
+    - [ ] `finally`
+    - [ ] `import` (followed by a package name possibly ending with `.*` or `.**`)
+    - [ ] `include` (followed by string literal)
+    - [ ] `public +=` (followed by a package name possibly ending with `.*` or `.**`)
+  - [ ] Expression
+- [ ] Expression
+  - [ ] Variable binding (`var` or `const` followed by a optionally typed pattern) 
+  - [ ] Keywords
+    - [ ] `null`
+    - [ ] `false`
+    - [ ] `true`
+    - [ ] `this`
+  - [ ] Qualified identifier (complex)
+  - [ ] Simple identifier
+  - [ ] Numeric literal
+  - [ ] Semicolon
+  - [ ] Parenthesized
+  - [ ] String literal
+  - [ ] Reg exp literal (if either in the beginning of file, or preceded by one of (`=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `&`, `^`, `|`, `<`, `>`), or not preceded by identifier)
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
+  - [ ] 
