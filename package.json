@@ -21,7 +21,9 @@
     "languages": [
       {
         "id": "as3",
-        "extensions": [".as"],
+        "extensions": [
+          ".as"
+        ],
         "aliases": [
           "ActionScript 3",
           "ActionScript",
@@ -30,34 +32,37 @@
           "as3",
           "as"
         ],
-        "configuration": "./actionscript.configuration.json"
+        "configuration": "./languages/as3/as3.configuration.json"
       }
     ],
     "grammars": [
       {
         "language": "as3",
         "scopeName": "source.as3",
-        "path": "./syntaxes/as3.tmLanguage.json"
+        "path": "./languages/as3/as3.tmLanguage.json"
       }
     ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "npm run compile-syntaxes && tsc -p ./",
+    "watch": "npm run compile-syntaxes && tsc -watch -p ./",
+    "compile-syntaxes": "npx tmlangyaml2json languages/as3/as3.tmLanguage.yaml languages/as3/as3.tmLanguage.json",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test"
   },
+  "license": "Apache-2.0",
   "devDependencies": {
-    "@types/vscode": "^1.96.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.96.0",
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
-    "eslint": "^9.16.0",
-    "typescript": "^5.7.2",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.4.1"
+    "@vscode/test-electron": "^2.4.1",
+    "com.hydroperfox.tmlanguage.yaml2json": "^1.0.0",
+    "eslint": "^9.16.0",
+    "typescript": "^5.7.2"
   }
 }
