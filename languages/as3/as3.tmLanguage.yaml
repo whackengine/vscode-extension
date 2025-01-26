@@ -33,6 +33,12 @@ variables:
       (?:\b[0-9][0-9_]*([f|F])?\b(?!\.))                                 # 1
     )(?!\$)
 
+  hexLiteral: |-
+    0[Xx][A-Fa-f0-9_]+
+
+  binLiteral: |-
+    0[Bb][01_]+
+
   keywordAttribute: >-
     (?:(?x) public | private | protected | internal | final | static | dynamic | override | abstract)
 
@@ -231,6 +237,64 @@ repository:
       # Reserved namespaces
       - match: \b(public|private|protected|internal)\b
         name: keyword.other
+      - match: \b(null|false|true)\b
+        name: constant.language
+      - match: \b(this|super)\b
+        name: variable.language
+      - match: \b(import\s*\.\s*meta)\b
+        name: variable.language
+      - begin: \b(new)\s*\<
+        end: \>
+        beginCaptures:
+          1: keyword.operator
+        patterns:
+          - include: '#expression'
+      - match: \b(new|delete|void|typeof|await|yield|instanceof|not\s+in|in|is(\s+not)?|as)\b
+        captures:
+          1: keyword.operator
+      - match: \b(public|private|protected|internal)
+        name: constant.language
+      - match: (::)\s*({{id}})
+        captures:
+          1: keyword.operator
+      - match: |-
+          ::
+        name: keyword.operator
+      - match: \{{id}}
+      - match: \{{decimalNumber}}|{{hexLiteral}}|{{binLiteral}}
+        name: constant.numeric
+      - begin: \(
+        end: \)
+        name: expression.group
+        patterns:
+          - include: '#expression'
+      # String literal
+      - begin: \@"""
+        end: \"""
+        name: string.quoted.triple
+      - begin: \@'''
+        end: \'''
+        name: string.quoted.triple
+      - begin: \"""
+        end: \"""
+        name: string.quoted.triple
+        patterns:
+          - include: '#stringLiteral'
+      - begin: \'''
+        end: \'''
+        name: string.quoted.triple
+        patterns:
+          - include: '#stringLiteral'
+      - begin: \"
+        end: \"
+        name: string.quoted.triple
+        patterns:
+          - include: '#stringLiteral'
+      - begin: \'
+        end: \'
+        name: string.quoted.triple
+        patterns:
+          - include: '#stringLiteral'
       # RegExp
       - begin: >-
           (?x) {{regexOrXMLStartCondition}} (/)(?![/*])
@@ -290,6 +354,38 @@ repository:
           1: { name: punctuation.definition.tag.xml }
         patterns:
           - include: '#xmlContent'
+      - begin: ;
+        name: punctuation.terminator.statement
+      - begin: \[
+        end: \]
+        patterns:
+          - include: '#expression'
+      - begin: \{
+        end: \}
+        patterns:
+          - include: '#object'
+      - match: \.\.\.
+        name: punctuation
+      - match: >-
+          (?x) \, | \:
+        name: punctuation
+      - match: (\.)\s*({{id}})
+        captures:
+          1: punctuation
+      - begin: (\.)\s*(<)
+        end: \>
+        patterns:
+          - include: '#expression'
+      - match: \.\.
+        name: keyword.operator
+      - match: \.
+        name: punctuation
+      - match: \@
+        name: keyword.operator
+      - match: \.|\?
+        name: punctuation
+      - match: (\+\+?|\-\-?|!(==?)?|~|\*\*?|/|%|<=|>=|\<\<?|\>(\>\>?)?|=(==?)?|&&?|\^\^?|\|\|?)
+        name: keyword.operator
 
   parameterList:
     patterns:
@@ -389,6 +485,21 @@ repository:
         end: \}
         patterns:
           - include: '#expression'
+
+  stringLiteral:
+    patterns:
+      - match: \\x[A-Fa-f0-9]{2}
+        name: constant.character.escape
+      - match: \\u\{[A-Fa-f0-9]*\}
+        name: constant.character.escape
+      - match: \\u[A-Fa-f0-9]{2}
+        name: constant.character.escape
+      - match: \\['"\\bfnrtv]
+        name: constant.character.escape
+      - match: \\[^0-9]
+        name: constant.character.escape
+      - match: \\$
+        name: constant.character.escape
 
   comment:
     patterns:

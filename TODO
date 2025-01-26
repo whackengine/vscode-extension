@@ -19,79 +19,54 @@ Semantic Token Provider (in addition to TextMate highlighting)
 - [ ] Expression
   - [x] Comments
   - [x] Variable binding (`var` or `const` followed by pattern) 
-  - [ ] Keywords
-    - [ ] `null`
-    - [ ] `false`
-    - [ ] `true`
-    - [ ] `this`
-    - [ ] `import.meta`
-    - [ ] Vector `new <T>`
-    - [x] Function `function(...)` or `function name(...)` (here parameters should not be highlighted as parameters, since it may also be a function type)
-    - [ ] `new`
-    - [ ] `super`
-    - [ ] `delete`
-    - [ ] `void`
-    - [ ] `typeof`
-    - [ ] `await`
-    - [ ] `yield`
-    - [ ] `instanceof`
-    - [ ] `in`
-    - [ ] `not in`
-    - [ ] `is not`
-    - [ ] `is`
-    - [ ] `as`
-    - [ ] `public`
-    - [ ] `private`
-    - [ ] `protected`
-    - [ ] `internal`
-  - [ ] Punctuator `::`
-  - [ ] Identifier
-  - [ ] Numeric literal
-  - [ ] Parenthesized `(...)`
-  - [ ] String literal
+  - [x] Keywords
+  - [x] Punctuator `::`
+  - [x] Identifier
+  - [x] Numeric literal
+  - [x] Parenthesized `(...)`
+  - [x] String literal
   - [x] Reg exp literal (if either in the beginning of file after any optional whitespace, or preceded by one of (`:`, `=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `~`, `&`, `^`, `|`, `<`, `>`) possibly between whitespace `\s*`)
   - [x] XML (if either in the beginning of file after any optional whitespace, or preceded by one of (`:`, `=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `~`, `&`, `^`, `|`, `<`, `>`) possibly between whitespace `\s*`)
   - [x] XML markup (comment, CDATA or processing-instruction)
   - [x] XML list
-  - [ ] Semicolon `;`
-  - [ ] Square-group `[...]`
-  - [ ] Punctuator `...`
-  - [ ] Comma `,`
-  - [ ] Colon `:`
-  - [ ] Object `{ ... }`
-    - [ ] Enter context and highlight names more carefully since keywords are allowed 
-  - [ ] Apply type or parameterized type `.<...>`
-  - [ ] Dot `.` followed by simple identifier
-  - [ ] Dot `.`
-  - [ ] Attribute `@`
-  - [ ] Descendants `..`
-  - [ ] Question `?`
-  - [ ] Increment `++`
-  - [ ] Decrement `--`
-  - [ ] Exclamation mark `!`
-  - [ ] Plus `+`
-  - [ ] Minus `-`
-  - [ ] Bitwise not `~`
-  - [ ] Power `**`
-  - [ ] Times `*`
-  - [ ] Divide `/`
-  - [ ] Remainder `%`
-  - [ ] Shift-left `<<`
-  - [ ] Shift-right unsigned `>>>`
-  - [ ] Shift-right `>>`
-  - [ ] Less-than or equals `<=`
-  - [ ] Less-than `<`
-  - [ ] Greater-than or equals `>=`
-  - [ ] Greater-than `>`
-  - [ ] `===`
-  - [ ] `==`
-  - [ ] `!==`
-  - [ ] `!=`
-  - [ ] `=`
-  - [ ] `&&`
-  - [ ] `^^`
-  - [ ] `||`
-  - [ ] `??`
-  - [ ] `&`
-  - [ ] `^`
-  - [ ] `|`
+  - [x] Semicolon `;`
+  - [x] Square-group `[...]`
+  - [x] Punctuator `...`
+  - [x] Comma `,`
+  - [x] Colon `:`
+  - [x] Object `{ ... }`
+  - [x] Apply type or parameterized type `.<...>`
+  - [x] Dot `.` followed by simple identifier
+  - [x] Dot `.`
+  - [x] Attribute `@`
+  - [x] Descendants `..`
+  - [x] Question `?`
+  - [x] Increment `++`
+  - [x] Decrement `--`
+  - [x] Exclamation mark `!`
+  - [x] Plus `+`
+  - [x] Minus `-`
+  - [x] Bitwise not `~`
+  - [x] Power `**`
+  - [x] Times `*`
+  - [x] Divide `/`
+  - [x] Remainder `%`
+  - [x] Shift-left `<<`
+  - [x] Shift-right unsigned `>>>`
+  - [x] Shift-right `>>`
+  - [x] Less-than or equals `<=`
+  - [x] Less-than `<`
+  - [x] Greater-than or equals `>=`
+  - [x] Greater-than `>`
+  - [x] `===`
+  - [x] `==`
+  - [x] `!==`
+  - [x] `!=`
+  - [x] `=`
+  - [x] `&&`
+  - [x] `^^`
+  - [x] `||`
+  - [x] `??`
+  - [x] `&`
+  - [x] `^`
+  - [x] `|`
