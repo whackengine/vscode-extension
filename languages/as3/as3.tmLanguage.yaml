@@ -250,8 +250,7 @@ repository:
         patterns:
           - include: '#expression'
       - match: \b(new|delete|void|typeof|await|yield|instanceof|not\s+in|in|is(\s+not)?|as)\b
-        captures:
-          1: { name: keyword.operator }
+        name: keyword.operator
       - match: \b(public|private|protected|internal)\b
         name: constant.language
       - match: (::)\s*({{id}})
@@ -367,7 +366,7 @@ repository:
           1: { name: punctuation.definition.tag.xml }
         patterns:
           - include: '#xmlContent'
-      - begin: ;
+      - match: ;
         name: punctuation.terminator.statement
       - begin: \[
         end: \]
