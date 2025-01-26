@@ -24,7 +24,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
     - [ ] `true`
     - [ ] `this`
     - [ ] `import.meta`
-    - [ ] Vector `new [T] { ... }`
+    - [ ] Vector `new <T>`
     - [x] Function `function(...)` or `function name(...)` (here parameters should not be highlighted as parameters, since it may also be a function type)
     - [ ] `new`
     - [ ] `super`
