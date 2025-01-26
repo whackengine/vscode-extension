@@ -18,11 +18,11 @@ variables:
   xmlNamePart: >-
     (?:(?x) [\p{L}:.\-_\p{Nl}\p{Nd}])
   xmlName: >-
-    (?:(?x) {{xmlNameStart}} {{xmlNamePart}}* )
+    (?:(?x) {{xmlNameStart}} {{xmlNamePart}}*)
 
   # Based on https://github.com/microsoft/TypeScript-TmLanguage
   decimalNumber: |-
-    (?<!\$)(?:
+    (?<!\$)(?:(?x)(?:
       (?:\b[0-9][0-9_]*(\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*([f|F])?\b)| # 1.1E+3
       (?:\b[0-9][0-9_]*(\.)[eE][+-]?[0-9][0-9_]*([f|F])?\b)|             # 1.E+3
       (?:\B(\.)[0-9][0-9_]*[eE][+-]?[0-9][0-9_]*([f|F])?\b)|             # .1E+3
@@ -31,7 +31,7 @@ variables:
       (?:\b[0-9][0-9_]*(\.)([f|F])?\B)|                                  # 1.
       (?:\B(\.)[0-9][0-9_]*([f|F])?\b)|                                  # .1
       (?:\b[0-9][0-9_]*([f|F])?\b(?!\.))                                 # 1
-    )(?!\$)
+    ))(?!\$)
 
   hexLiteral: |-
     \b0[Xx][A-Fa-f0-9_]+
@@ -261,7 +261,14 @@ repository:
           ::
         name: keyword.operator
       - match: ({{id}})
-      - match: ({{decimalNumber}}|{{hexLiteral}}|{{binLiteral}})
+      - match: |-
+          {{decimalNumber}}
+        name: constant.numeric
+      - match: |-
+          {{hexLiteral}}
+        name: constant.numeric
+      - match: |-
+          {{binLiteral}}
         name: constant.numeric
       - begin: \(
         end: \)
@@ -287,18 +294,18 @@ repository:
           - include: '#stringLiteral'
       - begin: \@"
         end: \"
-        name: string.quoted.triple
+        name: string.quoted.double
       - begin: \@'
         end: \'
-        name: string.quoted.triple
+        name: string.quoted.single
       - begin: \"
         end: \"
-        name: string.quoted.triple
+        name: string.quoted.double
         patterns:
           - include: '#stringLiteral'
       - begin: \'
         end: \'
-        name: string.quoted.triple
+        name: string.quoted.single
         patterns:
           - include: '#stringLiteral'
       # RegExp
