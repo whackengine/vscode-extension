@@ -43,6 +43,9 @@ variables:
     (?:(?x) public | private | protected | internal | final | static | dynamic | override | abstract)
 
   definitionKeyword: >-
+    class|enum|interface|type|namespace|var|const|function
+
+  definitionKeywordStop: >-
     class|enum|interface|type|namespace|var|const|function|extends|implements|default\s+xml\s+namespace|new|delete|void|typeof|await|yield|instanceof|not\s+in|in|is(\s+not)?|as|if|else|for\s+each|for|return|throw|switch\s+type|switch|case|try|catch|finally
 
   regexOrXMLStartCondition: >-
@@ -79,12 +82,9 @@ repository:
           0: { name: punctuation.definition.block }
         patterns:
           - include: '#directive'
-      # Keyword binary operators override annotations
-      - match: >-
-          (?x) \b {{id}}(?:\s*\.\s*{{id}})* \s+ (?=(instanceof|not\s+in|in|is(\s+not)?|as)\b)
       # Annotatable definition attributes
       - match: >-
-          (?x) \b  (   (?:\s*(?!{{definitionKeyword}}\b){{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?={{definitionKeyword}})\b
+          (?x) \b  (   (?:\s*(?!{{definitionKeywordStop}}\b){{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?={{definitionKeyword}})\b
         captures:
           1: { name: keyword.other }
       # Getter or setter
@@ -388,7 +388,7 @@ repository:
       - match: (\.)\s*({{id}})
         captures:
           1: { name: punctuation }
-      - begin: (\.)\s*(<)
+      - begin: (\.)\s*(\<)
         end: \>
         patterns:
           - include: '#directive'
