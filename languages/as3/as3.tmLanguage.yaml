@@ -13,6 +13,13 @@ variables:
   id: >-
     (?:(?x) {{idStart}} {{idPart}}* )
 
+  xmlNameStart: >-
+    (?:(?x) [\p{L}:_\p{Nl}])
+  xmlNamePart: >-
+    (?:(?x) [\p{L}:.\-_\p{Nl}\p{Nd}])
+  xmlName: >-
+    (?:(?x) {{xmlNameStart}} {{xmlNamePart}}* )
+
   # Based on https://github.com/microsoft/TypeScript-TmLanguage
   decimalNumber: |-
     (?<!\$)(?:
@@ -31,6 +38,9 @@ variables:
 
   definitionKeyword: >-
     class|enum|interface|type|namespace|var|const|function|extends|implements|default\s+xml\s+namespace
+
+  regexOrXMLStartCondition: >-
+    (?<=^\s*|[:=,;(\[{+\-*/%~&\^|<>]\s*)
 
 patterns:
   - include: '#directive'
@@ -119,10 +129,42 @@ repository:
       - match: \b(extends|implements)\b
         name: keyword.other
       # `return` followed by regex
-      - begin: \b(return)\s*(/)
+      - begin: \b(return)\s*(/)(?![/*])
         end: >-
-          (?x) /[A-Za-z]*\b
+          (?x) /([A-Za-z]+\b)?
         name: string.regexp
+        beginCaptures:
+          1: { name: keyword.control }
+        patterns:
+          - include: '#regex'
+      # `return` followed by XML
+      - begin: \b(return)\s*(<)({{xmlName}})
+        end: >-
+          (?x) (/>) | ( (</) \s* ({{xmlName}}) \s* (>) )
+        beginCaptures:
+          1: { name: keyword.control }
+          2: { name: punctuation.definition.tag.xml }
+          3: { name: entity.name.tag }
+        endCaptures:
+          1: { name: punctuation.definition.tag.xml }
+          3: { name: punctuation.definition.tag.xml }
+          4: { name: entity.name.tag }
+          5: { name: punctuation.definition.tag.xml }
+        patterns:
+          - include: '#xmlTag'
+      # `return` followed by XML containing interpolated tag names
+      - begin: \b(return)\s*(<)(\{[^}]*\})
+        end: >-
+          (?x) (/>) | ( (</) \s* (\{[^}]*\}) \s* (>) )
+        beginCaptures:
+          1: { name: keyword.control }
+          2: { name: punctuation.definition.tag.xml }
+        endCaptures:
+          1: { name: punctuation.definition.tag.xml }
+          3: { name: punctuation.definition.tag.xml }
+          5: { name: punctuation.definition.tag.xml }
+        patterns:
+          - include: '#xmlTag'
       # `break` and `continue`
       - match: \b(break|continue)(\s+{{id}})?
         captures:
@@ -189,6 +231,65 @@ repository:
       # Reserved namespaces
       - match: \b(public|private|protected|internal)\b
         name: keyword.other
+      # RegExp
+      - begin: >-
+          (?x) {{regexOrXMLStartCondition}} (/)(?![/*])
+        end: >-
+          (?x) /([A-Za-z]+\b)?
+        name: string.regexp
+        patterns:
+          - include: '#regex'
+      # XML tag
+      - begin: >-
+          (?x) {{regexOrXMLStartCondition}} (<)({{xmlName}})
+        end: >-
+          (?x) (/>) | ( (</) \s* ({{xmlName}}) \s* (>) )
+        beginCaptures:
+          1: { name: punctuation.definition.tag.xml }
+          2: { name: entity.name.tag }
+        endCaptures:
+          1: { name: punctuation.definition.tag.xml }
+          3: { name: punctuation.definition.tag.xml }
+          4: { name: entity.name.tag }
+          5: { name: punctuation.definition.tag.xml }
+        patterns:
+          - include: '#xmlTag'
+      # XML tag containing interpolated tag names
+      - begin: >-
+          (?x) {{regexOrXMLStartCondition}} (<)(\{[^}]*\})
+        end: >-
+          (?x) (/>) | ( (</) \s* (\{[^}]*\}) \s* (>) )
+        beginCaptures:
+          1: { name: punctuation.definition.tag.xml }
+        endCaptures:
+          1: { name: punctuation.definition.tag.xml }
+          3: { name: punctuation.definition.tag.xml }
+          5: { name: punctuation.definition.tag.xml }
+        patterns:
+          - include: '#xmlTag'
+      # XMLCDATA
+      - begin: \<\!\[CDATA\[
+        end: \]\]>
+        name: string.other
+      # XMLComment
+      - begin: \<\!\-\-
+        end: \-\->
+        name: comment.block
+      # XMLPI
+      - begin: \<\?
+        end: \?>
+        name: comment.block
+      # XMLList
+      - begin: >-
+          (?x) (<>)
+        end: >-
+          (?x) (</>)
+        beginCaptures:
+          1: { name: punctuation.definition.tag.xml }
+        endCaptures:
+          1: { name: punctuation.definition.tag.xml }
+        patterns:
+          - include: '#xmlContent'
 
   parameterList:
     patterns:
@@ -222,7 +323,72 @@ repository:
   regex:
     patterns:
       - match: >-
-          (?x) \.
+          (?x) \\.
+
+  xmlTag:
+    patterns:
+      - begin: >-
+          (?x) (?<! </ \s* {{xmlName}} \s*) (>)
+        beginCaptures:
+          1: { name: punctuation.definition.tag.xml }
+        end: (?=\</)
+        patterns:
+          - include: '#xmlContent'
+      - begin: \"
+        end: \"
+        name: string.quoted.double
+      - begin: \'
+        end: \'
+        name: string.quoted.single
+      - match: \{\{xmlName}}
+        name: entity.name.other.attribute-name
+      # Interpolation
+      - begin: \{
+        end: \}
+        patterns:
+          - include: '#expression'
+
+  xmlContent:
+    patterns:
+      - begin: \<\!\[CDATA\[
+        end: \]\]>
+        name: string.other
+      - begin: \<\!\-\-
+        end: \-\->
+        name: comment.block
+      - begin: \<\?
+        end: \?>
+        name: comment.block
+      - begin: (<)({{xmlName}})
+        end: >-
+          (?x) (/>) | ( (</) \s* ({{xmlName}}) \s* (>) )
+        beginCaptures:
+          1: { name: punctuation.definition.tag.xml }
+          2: { name: entity.name.tag }
+        endCaptures:
+          1: { name: punctuation.definition.tag.xml }
+          3: { name: punctuation.definition.tag.xml }
+          4: { name: entity.name.tag }
+          5: { name: punctuation.definition.tag.xml }
+        patterns:
+          - include: '#xmlTag'
+      # XML tag containing interpolated tag names
+      - begin: (<)(\{[^}]*\})
+        end: >-
+          (?x) (/>) | ( (</) \s* (\{[^}]*\}) \s* (>) )
+        beginCaptures:
+          1: { name: punctuation.definition.tag.xml }
+        endCaptures:
+          1: { name: punctuation.definition.tag.xml }
+          3: { name: punctuation.definition.tag.xml }
+          5: { name: punctuation.definition.tag.xml }
+        patterns:
+          - include: '#xmlTag'
+      # Interpolation
+      - begin: \{
+        end: \}
+        patterns:
+          - include: '#expression'
 
   comment:
     patterns:

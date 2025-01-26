@@ -15,6 +15,7 @@ Semantic Token Provider (in addition to TextMate highlighting)
 
 # AS3 highlighter
 
+- [x] Directive
 - [ ] Expression
   - [x] Comments
   - [x] Variable binding (`var` or `const` followed by pattern) 
@@ -48,10 +49,10 @@ Semantic Token Provider (in addition to TextMate highlighting)
   - [ ] Numeric literal
   - [ ] Parenthesized `(...)`
   - [ ] String literal
-  - [ ] Reg exp literal (if either in the beginning of file after any optional whitespace, or preceded by one of (`:`, `=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `~`, `&`, `^`, `|`, `<`, `>`) possibly between whitespace `\s*`)
-  - [ ] XML
-  - [ ] XML markup (comment, CDATA or processing-instruction)
-  - [ ] XML list
+  - [x] Reg exp literal (if either in the beginning of file after any optional whitespace, or preceded by one of (`:`, `=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `~`, `&`, `^`, `|`, `<`, `>`) possibly between whitespace `\s*`)
+  - [x] XML (if either in the beginning of file after any optional whitespace, or preceded by one of (`:`, `=`, `,`, `;`, `(`, `[`, `{`, `+`, `-`, `*`, `/`, `%`, `~`, `&`, `^`, `|`, `<`, `>`) possibly between whitespace `\s*`)
+  - [x] XML markup (comment, CDATA or processing-instruction)
+  - [x] XML list
   - [ ] Semicolon `;`
   - [ ] Square-group `[...]`
   - [ ] Punctuator `...`
