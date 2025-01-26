@@ -43,7 +43,7 @@ variables:
     (?:(?x) public | private | protected | internal | final | static | dynamic | override | abstract)
 
   definitionKeyword: >-
-    class|enum|interface|type|namespace|var|const|function|extends|implements|default\s+xml\s+namespace|new|delete|void|typeof|await|yield|instanceof|not\s+in|in|is(\s+not)?|as
+    class|enum|interface|type|namespace|var|const|function|extends|implements|default\s+xml\s+namespace|new|delete|void|typeof|await|yield|instanceof|not\s+in|in|is(\s+not)?|as|if|else|for\s+each|for|return|throw|switch\s+type|switch|case|try|catch|finally
 
   regexOrXMLStartCondition: >-
     (?<=^\s*|[:=,;(\[{+\-*/%~&\^|<>]\s*)
@@ -54,6 +54,8 @@ patterns:
 repository:
   directive:
     patterns:
+      - include: '#comment'
+
       # Package definition start
       - match: (?x) \b(package) \s* ({{idStart}}{{idPart}}* \s* (\s*\.\s*{{idStart}}{{idPart}}*)*)\b
         captures:
@@ -75,9 +77,11 @@ repository:
           0: { name: punctuation.definition.block }
         endCaptures:
           0: { name: punctuation.definition.block }
-        name: expression.group
         patterns:
           - include: '#directive'
+      # Keyword binary operators override annotations
+      - match: >-
+          (?x) \b {{id}}(?:\s*\.\s*{{id}})* \s+ (?=(instanceof|not\s+in|in|is(\s+not)?|as)\b)
       # Annotatable definition attributes
       - match: >-
           (?x) \b  (   (?:\s*(?!{{definitionKeyword}}\b){{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?={{definitionKeyword}})\b
@@ -189,13 +193,6 @@ repository:
       # import or include
       - match: \b(import|include)\b
         name: keyword.other
-
-      - include: '#expression'
-
-  expression:
-    patterns:
-      - include: '#comment'
-
       # Variable definition (object destructuring)
       - begin: >-
           (?x) \b (var|const) \s* \{
@@ -231,6 +228,13 @@ repository:
           2: { name: entity.name.function }
         patterns:
           - include: '#parameterList'
+      - begin: >-
+          (?x) \b(function) \s* \(
+        end: \)
+        captures:
+          1: { name: keyword.other }
+        patterns:
+          - include: '#parameterList'
       - match: >-
           (?x) \b(function)\b
         name: keyword.other
@@ -246,11 +250,11 @@ repository:
       - begin: \b(new)\s*\<
         end: \>
         beginCaptures:
-          1: { name: keyword.operator }
+          1: { name: keyword.other }
         patterns:
-          - include: '#expression'
+          - include: '#directive'
       - match: \b(new|delete|void|typeof|await|yield|instanceof|not\s+in|in|is(\s+not)?|as)\b
-        name: keyword.operator
+        name: keyword.other
       - match: \b(public|private|protected|internal)\b
         name: constant.language
       - match: (::)\s*({{id}})
@@ -273,7 +277,7 @@ repository:
         end: \)
         name: expression.group
         patterns:
-          - include: '#expression'
+          - include: '#directive'
       # String literal
       - begin: \@"""
         end: \"""
@@ -371,7 +375,7 @@ repository:
       - begin: \[
         end: \]
         patterns:
-          - include: '#expression'
+          - include: '#directive'
       - begin: \{
         end: \}
         patterns:
@@ -383,11 +387,11 @@ repository:
         name: punctuation
       - match: (\.)\s*({{id}})
         captures:
-          1: punctuation
+          1: { name: punctuation }
       - begin: (\.)\s*(<)
         end: \>
         patterns:
-          - include: '#expression'
+          - include: '#directive'
       - match: \.\.
         name: keyword.operator
       - match: \.
@@ -405,7 +409,7 @@ repository:
           (?x) (?<=[,(] \s*) ({{id}})
         captures:
           1: { name: variable.parameter }
-      - include: '#expression'
+      - include: '#directive'
 
   object:
     patterns:
@@ -414,7 +418,7 @@ repository:
         end: >-
           (?x) [,}]
         patterns:
-          - include: '#expression'
+          - include: '#directive'
 
       # Shorthand
       - match: >-
@@ -422,11 +426,11 @@ repository:
         captures:
           1: { name: variable }
 
-      - include: '#expression'
+      - include: '#directive'
   
   array:
     patterns:
-      - include: '#expression'
+      - include: '#directive'
 
   regex:
     patterns:
@@ -454,7 +458,7 @@ repository:
       - begin: \{
         end: \}
         patterns:
-          - include: '#expression'
+          - include: '#directive'
 
   xmlContent:
     patterns:
@@ -496,7 +500,7 @@ repository:
       - begin: \{
         end: \}
         patterns:
-          - include: '#expression'
+          - include: '#directive'
 
   stringLiteral:
     patterns:
