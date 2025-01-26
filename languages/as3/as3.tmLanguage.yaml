@@ -43,7 +43,7 @@ variables:
     (?:(?x) public | private | protected | internal | final | static | dynamic | override | abstract)
 
   definitionKeyword: >-
-    class|enum|interface|type|namespace|var|const|function|extends|implements|default\s+xml\s+namespace
+    class|enum|interface|type|namespace|var|const|function|extends|implements|default\s+xml\s+namespace|new|delete|void|typeof|await|yield|instanceof|not\s+in|in|is(\s+not)?|as
 
   regexOrXMLStartCondition: >-
     (?<=^\s*|[:=,;(\[{+\-*/%~&\^|<>]\s*)
