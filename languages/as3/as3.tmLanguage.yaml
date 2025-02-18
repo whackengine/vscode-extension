@@ -79,7 +79,7 @@ repository:
           - include: '#directive'
       # Annotatable definition attributes
       - match: >-
-          (?x) \b  (   (?:\s*(?!{{definitionKeywordStop}}\b){{id}}(?:\s*\.\s*{{id}})*)+   )  \s*  (?={{definitionKeyword}})\b
+          (?x) \b  (?>(   (?:\s*(?!{{definitionKeywordStop}}\b){{id}}(?:\s*\.\s*{{id}})*)++   )  \s*  (?={{definitionKeyword}}))\b
         captures:
           1: { name: keyword.other }
       # Getter or setter

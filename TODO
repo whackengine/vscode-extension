@@ -3,13 +3,3 @@
 https://github.com/hydroperfox/tmlangyaml2json
 
 https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide
-
-# Semantic token provider
-
-Semantic Token Provider (in addition to TextMate highlighting)
-
-- [ ] Highlight object field names (keywords are identifiers)
-- [ ] Highlight constructor name
-- [ ] Highlight parameter names in function expressions
-- [ ] Highlight ASDoc tags
-- [ ] Highlight import names
