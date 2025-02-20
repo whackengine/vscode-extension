@@ -38,7 +38,11 @@ export function activate(context: vscode.ExtensionContext) {
         const server: vscodelc.Executable = {
             command: path.resolve(whackHome, "bin/whacklangserver" + (underWindows ? ".exe" : "")),
             args: [],
-            options: {},
+            options: {
+                env: {
+                    ...process.env,
+                }
+            },
         };
 
         const serverOptions: vscodelc.ServerOptions = server;
@@ -49,7 +53,15 @@ export function activate(context: vscode.ExtensionContext) {
                 { scheme: "file", language: "as3" },
                 { scheme: "file", language: "mxml" },
                 { scheme: "file", language: "css" }
-            ]
+            ],
+            synchronize: {
+                // Notify the server about file changes to AS3/MXML/CSS and
+                // whack.toml files contained in the workspace
+                fileEvents: [
+                    vscode.workspace.createFileSystemWatcher("**/*.{as,mxml,css}"),
+                    vscode.workspace.createFileSystemWatcher("**/whack.toml"),
+                ],
+            },
         };
 
         const client = new vscodelc.LanguageClient("ActionScript 3 & MXML language server", serverOptions, clientOptions);
