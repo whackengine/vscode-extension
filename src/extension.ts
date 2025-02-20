@@ -1,5 +1,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
+import path from 'path';
 import * as vscode from 'vscode';
 
 // Language client
@@ -35,9 +36,9 @@ export function activate(context: vscode.ExtensionContext) {
     {
         const underWindows = process.platform == "win32";
         const server: vscodelc.Executable = {
-            command: `${whackHome}/bin/whacklangserver${underWindows ? ".exe" : ""}`,
+            command: path.resolve(whackHome, "bin/whacklangserver" + (underWindows ? ".exe" : "")),
             args: [],
-            options: { shell: true, detached: true },
+            options: {},
         };
 
         const serverOptions: vscodelc.ServerOptions = server;
