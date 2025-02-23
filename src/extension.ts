@@ -72,24 +72,25 @@ export function activate(context: vscode.ExtensionContext) {
         const client = new vscodelc.LanguageClient("ActionScript 3 & MXML language server", serverOptions, clientOptions);
 
         client.onNotification("status/update", (params) => {
-            const backgroundColor =
-                params.error ? new vscode.ThemeColor("statusBarItem.errorBackground") :
-                params.warning ? new vscode.ThemeColor("statusBarItem.warningBackground") : undefined;
-
-            showStatusBarItem(context, backgroundColor, !!params.loading, String(params.message));
+            showStatusBarItem(context, !!params.error, !!params.warning, !!params.loading, String(params.message));
         });
 
         client.start();
     }
 }
 
-function showStatusBarItem(context: vscode.ExtensionContext, backgroundColor: vscode.ThemeColor | undefined = undefined, loading: boolean = false, message: string = "") {
+function showStatusBarItem(context: vscode.ExtensionContext, error: boolean, warning: boolean, loading: boolean, message: string = "") {
     if (statusBarItem === null)
     {
         statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);7
         context.subscriptions.push(statusBarItem);
     }
-    statusBarItem.text = "Whack" + (loading ? " $(loading~spin)" : "");
+
+    const backgroundColor =
+        error ? new vscode.ThemeColor("statusBarItem.errorBackground") :
+        warning ? new vscode.ThemeColor("statusBarItem.warningBackground") : undefined;
+
+    statusBarItem.text =(error ? "$(error) " : warning ? "$(warning) " : "") +  "Whack" + (loading ? " $(loading~spin)" : "");
     statusBarItem.backgroundColor = backgroundColor;
     statusBarItem.tooltip = message ? message : undefined;
     statusBarItem.show();
