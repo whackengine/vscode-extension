@@ -14,8 +14,9 @@
   "contributes": {
     "commands": [
       {
-        "command": "whack-engine.helloWorld",
-        "title": "Hello World"
+        "command": "whack.restartServer",
+        "title": "Restart server",
+        "category": "whack"
       }
     ],
     "languages": [

@@ -6,95 +6,149 @@ import * as vscode from 'vscode';
 // Language client
 import * as vscodelc from "vscode-languageclient/node";
 
-// Whack SDK's home path
-const whackHome = process.env.WHACK_HOME;
+export class WhackExtension
+{
+    /**
+     * Whack SDK's home path.
+     */
+    whackHome: string | null = "";
 
-// Status variables
-let statusBar: vscode.StatusBarItem | null = null;
-let statusMessage = null;
+    /**
+     * Status bar item.
+     */
+    statusBar: vscode.StatusBarItem | null = null;
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "whack-engine" is now active!');
+    /**
+     * Extension context.
+     */
+    context: vscode.ExtensionContext | null = null;
+    
+    /**
+     * Language client.
+     */
+    languageClient: vscodelc.LanguageClient | null = null;
 
-    if (whackHome === undefined)
+    /**
+     * Disposables.
+     */
+    subscriptions: vscode.Disposable[] = [];
+
+    async start()
     {
-        vscode.window.showErrorMessage("Environment variable WHACK_HOME must be set.");
-    }
+        this.whackHome = process.env.WHACK_HOME ?? null;
+        console.log('Whack engine extension started!');
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with registerCommand
-    // The commandId parameter must match the command field in package.json
-    const disposable = vscode.commands.registerCommand('whack-engine.helloWorld', () => {
-        // The code you place here will be executed every time your command is executed
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World from Whack engine support!');
-    });
+        if (this.whackHome === null)
+        {
+            vscode.window.showErrorMessage("Environment variable WHACK_HOME must be set.");
+        }
 
-    context.subscriptions.push(disposable);
-
-    // Setup language server
-    if (whackHome)
-    {
-        const underWindows = process.platform == "win32";
-        const server: vscodelc.Executable = {
-            command: path.resolve(whackHome, "bin/whacklangserver" + (underWindows ? ".exe" : "")),
-            args: [],
-            options: {
-                env: {
-                    ...process.env,
-                }
-            },
-        };
-
-        const serverOptions: vscodelc.ServerOptions = server;
-
-        let clientOptions: vscodelc.LanguageClientOptions = {
-            // Register the server for AS3/MXML/CSS
-            documentSelector: [
-                { scheme: "file", language: "as3" },
-                { scheme: "file", language: "mxml" },
-                { scheme: "file", language: "css" }
-            ],
-            synchronize: {
-                // Notify the server about file changes to AS3/MXML/CSS and
-                // whack.toml files contained in the workspace
-                fileEvents: [
-                    vscode.workspace.createFileSystemWatcher("**/*.{as,mxml,css}"),
-                    vscode.workspace.createFileSystemWatcher("**/whack.toml"),
-                ],
-            },
-        };
-
-        const client = new vscodelc.LanguageClient("ActionScript 3 & MXML language server", serverOptions, clientOptions);
-
-        client.onNotification("status/update", (params) => {
-            showStatusBarItem(context, !!params.error, !!params.warning, !!params.loading, String(params.message));
+        // "whack.restartServer" command
+        const disposable = vscode.commands.registerCommand("whack.restartServer", () => {
+            this.restart();
         });
 
-        client.start();
+        this.subscriptions.push(disposable);
+
+        // Setup language server
+        if (this.whackHome)
+        {
+            const underWindows = process.platform == "win32";
+            const server: vscodelc.Executable = {
+                command: path.resolve(this.whackHome, "bin/whacklangserver" + (underWindows ? ".exe" : "")),
+                args: [],
+                options: {
+                    env: {
+                        ...process.env,
+                    }
+                },
+            };
+
+            const serverOptions: vscodelc.ServerOptions = server;
+
+            let clientOptions: vscodelc.LanguageClientOptions = {
+                // Register the server for AS3/MXML/CSS
+                documentSelector: [
+                    { scheme: "file", language: "as3" },
+                    { scheme: "file", language: "mxml" },
+                    { scheme: "file", language: "css" }
+                ],
+                synchronize: {
+                    // Notify the server about file changes to AS3/MXML/CSS and
+                    // whack.toml files contained in the workspace
+                    fileEvents: [
+                        vscode.workspace.createFileSystemWatcher("**/*.{as,mxml,css}"),
+                        vscode.workspace.createFileSystemWatcher("**/whack.toml"),
+                    ],
+                },
+            };
+
+            this.languageClient = new vscodelc.LanguageClient("ActionScript 3 & MXML language server", serverOptions, clientOptions);
+
+            this.languageClient.onNotification("status/update", (params) => {
+                this.updateStatusBar(!!params.error, !!params.warning, !!params.loading, String(params.message));
+            });
+
+            this.languageClient.start();
+        }
+    }
+
+    async restart()
+    {
+        await this.stopAndDispose();
+        await this.start();
+    }
+
+    async stopAndDispose()
+    {
+        // Wait 100ms for disposing.
+        await this.languageClient?.stop(100).catch((_) => {});
+        await this.dispose();
+    }
+
+    async dispose()
+    {
+        if (this.statusBar)
+        {
+            this.statusBar.hide();
+        }
+
+        this.subscriptions.forEach(d => { d.dispose() });
+        this.subscriptions = [];
+
+        await this.languageClient?.dispose();
+        this.languageClient = null;
+        this.whackHome = null;
+    }
+
+    updateStatusBar(error: boolean, warning: boolean, loading: boolean, message: string = ""): void {
+        if (this.statusBar === null)
+        {
+            this.statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);7
+            this.subscriptions.push(this.statusBar);
+        }
+    
+        const backgroundColor =
+            error ? new vscode.ThemeColor("statusBar.errorBackground") :
+            warning ? new vscode.ThemeColor("statusBar.warningBackground") : undefined;
+    
+        this.statusBar.text = (loading ? " $(loading~spin)" : error ? "$(error) " : warning ? "$(warning) " : "") +  "Whack";
+        this.statusBar.backgroundColor = backgroundColor;
+        this.statusBar.tooltip = new vscode.MarkdownString(message, true);
+        this.statusBar.tooltip.isTrusted = true;
+        this.statusBar.tooltip.appendMarkdown(
+            "\n\n---\n\n" +
+            '[$(debug-restart) Restart server](command:whack.restartServer "Restart the server")'
+        );
+        this.statusBar.show();
     }
 }
 
-function showStatusBarItem(context: vscode.ExtensionContext, error: boolean, warning: boolean, loading: boolean, message: string = "") {
-    if (statusBar === null)
-    {
-        statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);7
-        context.subscriptions.push(statusBar);
-    }
+const extension = new WhackExtension();
 
-    const backgroundColor =
-        error ? new vscode.ThemeColor("statusBar.errorBackground") :
-        warning ? new vscode.ThemeColor("statusBar.warningBackground") : undefined;
-
-    statusBar.text = (loading ? " $(loading~spin)" : error ? "$(error) " : warning ? "$(warning) " : "") +  "Whack";
-    statusBar.backgroundColor = backgroundColor;
-    statusBar.tooltip = new vscode.MarkdownString(message);
-    statusBar.tooltip.isTrusted = true;
-    statusBar.show();
+export function activate(context: vscode.ExtensionContext) {
+    extension.context = context;
+    extension.start();
 }
 
 // This method is called when your extension is deactivated
