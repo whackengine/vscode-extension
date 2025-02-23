@@ -1,8 +1,8 @@
 {
   "name": "whack-engine",
   "displayName": "Whack engine support",
-  "description": "Integration with Whack engine and ActionScript 3 and MXML.",
-  "version": "0.0.1",
+  "description": "Whack engine integration for ActionScript 3 and MXML.",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.96.0"
   },

@@ -8,6 +8,8 @@ import * as vscodelc from "vscode-languageclient/node";
 
 export class WhackExtension
 {
+    version: string = "";
+
     /**
      * Whack SDK's home path.
      */
@@ -35,20 +37,22 @@ export class WhackExtension
 
     async start()
     {
-        this.whackHome = process.env.WHACK_HOME ?? null;
         console.log('Whack engine extension started!');
 
+        // Set version
+        this.version = this.context?.extension.packageJSON.version ?? "<unknown>";
+
+        // Detect SDK's home path
+        this.whackHome = process.env.WHACK_HOME ?? null;
         if (this.whackHome === null)
         {
             vscode.window.showErrorMessage("Environment variable WHACK_HOME must be set.");
         }
 
         // "whack.restartServer" command
-        const disposable = vscode.commands.registerCommand("whack.restartServer", () => {
+        this.subscriptions.push(vscode.commands.registerCommand("whack.restartServer", () => {
             this.restart();
-        });
-
-        this.subscriptions.push(disposable);
+        }));
 
         // Setup language server
         if (this.whackHome)
@@ -128,6 +132,8 @@ export class WhackExtension
             this.statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);7
             this.subscriptions.push(this.statusBar);
         }
+        
+        const { statusBar } = this;
    
         let backgroundColor: vscode.ThemeColor | undefined = undefined;
         let color: vscode.ThemeColor | undefined = undefined;
@@ -143,16 +149,24 @@ export class WhackExtension
             backgroundColor = new vscode.ThemeColor("statusBarItem.warningBackground");
         }
 
-        this.statusBar.text = (loading ? " $(loading~spin)" : error ? "$(error) " : warning ? "$(warning) " : "") +  "Whack";
-        this.statusBar.tooltip = new vscode.MarkdownString(message, true);
-        this.statusBar.tooltip.isTrusted = true;
-        this.statusBar.tooltip.appendMarkdown(
+        statusBar.text = (loading ? " $(loading~spin)" : error ? "$(error) " : warning ? "$(warning) " : "") +  "Whack";
+
+        // Build up tooltip
+        statusBar.tooltip = new vscode.MarkdownString(message, true);
+        statusBar.tooltip.isTrusted = true;
+        if (statusBar.tooltip.value) {
+            statusBar.tooltip.appendMarkdown("\n\n---\n\n");
+        }
+        statusBar.tooltip.appendMarkdown(
+            `Extension Info: Version ${this.version}` +
             "\n\n---\n\n" +
             '[$(debug-restart) Restart server](command:whack.restartServer "Restart the server")'
         );
-        this.statusBar.color = color;
-        this.statusBar.backgroundColor = backgroundColor;
-        this.statusBar.show();
+
+        statusBar.color = color;
+        statusBar.backgroundColor = backgroundColor;
+
+        statusBar.show();
     }
 }
 
