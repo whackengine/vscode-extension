@@ -6,7 +6,12 @@ import * as vscode from 'vscode';
 // Language client
 import * as vscodelc from "vscode-languageclient/node";
 
+// Whack SDK's home path
 const whackHome = process.env.WHACK_HOME;
+
+// Status variables
+let statusBarItem: vscode.StatusBarItem | null = null;
+let statusMessage = null;
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -65,8 +70,29 @@ export function activate(context: vscode.ExtensionContext) {
         };
 
         const client = new vscodelc.LanguageClient("ActionScript 3 & MXML language server", serverOptions, clientOptions);
+
+        client.onNotification("status/update", (params) => {
+            const backgroundColor =
+                params.error ? new vscode.ThemeColor("statusBarItem.errorBackground") :
+                params.warning ? new vscode.ThemeColor("statusBarItem.warningBackground") : undefined;
+
+            showStatusBarItem(context, backgroundColor, !!params.loading, String(params.message));
+        });
+
         client.start();
     }
+}
+
+function showStatusBarItem(context: vscode.ExtensionContext, backgroundColor: vscode.ThemeColor | undefined = undefined, loading: boolean = false, message: string = "") {
+    if (statusBarItem === null)
+    {
+        statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);7
+        context.subscriptions.push(statusBarItem);
+    }
+    statusBarItem.text = "Whack" + (loading ? " $(loading~spin)" : "");
+    statusBarItem.backgroundColor = backgroundColor;
+    statusBarItem.tooltip = message ? message : undefined;
+    statusBarItem.show();
 }
 
 // This method is called when your extension is deactivated
