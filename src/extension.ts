@@ -89,7 +89,7 @@ export class WhackExtension
                 this.updateStatusBar(!!params.error, !!params.warning, !!params.loading, String(params.message));
             });
 
-            this.languageClient.start();
+            await this.languageClient.start();
         }
     }
 
@@ -111,6 +111,7 @@ export class WhackExtension
         if (this.statusBar)
         {
             this.statusBar.hide();
+            this.statusBar = null;
         }
 
         this.subscriptions.forEach(d => { d.dispose() });
@@ -127,19 +128,30 @@ export class WhackExtension
             this.statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);7
             this.subscriptions.push(this.statusBar);
         }
-    
-        const backgroundColor =
-            error ? new vscode.ThemeColor("statusBar.errorBackground") :
-            warning ? new vscode.ThemeColor("statusBar.warningBackground") : undefined;
-    
+   
+        let backgroundColor: vscode.ThemeColor | undefined = undefined;
+        let color: vscode.ThemeColor | undefined = undefined;
+
+        if (error)
+        {
+            color = new vscode.ThemeColor("statusBarItem.errorForeground");
+            backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
+        }
+        else if (warning)
+        {
+            color = new vscode.ThemeColor("statusBarItem.warningForeground");
+            backgroundColor = new vscode.ThemeColor("statusBarItem.warningBackground");
+        }
+
         this.statusBar.text = (loading ? " $(loading~spin)" : error ? "$(error) " : warning ? "$(warning) " : "") +  "Whack";
-        this.statusBar.backgroundColor = backgroundColor;
         this.statusBar.tooltip = new vscode.MarkdownString(message, true);
         this.statusBar.tooltip.isTrusted = true;
         this.statusBar.tooltip.appendMarkdown(
             "\n\n---\n\n" +
             '[$(debug-restart) Restart server](command:whack.restartServer "Restart the server")'
         );
+        this.statusBar.color = color;
+        this.statusBar.backgroundColor = backgroundColor;
         this.statusBar.show();
     }
 }
@@ -152,4 +164,6 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+    extension.stopAndDispose();
+}
