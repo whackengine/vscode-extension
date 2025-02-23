@@ -10,7 +10,7 @@ import * as vscodelc from "vscode-languageclient/node";
 const whackHome = process.env.WHACK_HOME;
 
 // Status variables
-let statusBarItem: vscode.StatusBarItem | null = null;
+let statusBar: vscode.StatusBarItem | null = null;
 let statusMessage = null;
 
 // This method is called when your extension is activated
@@ -80,20 +80,21 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function showStatusBarItem(context: vscode.ExtensionContext, error: boolean, warning: boolean, loading: boolean, message: string = "") {
-    if (statusBarItem === null)
+    if (statusBar === null)
     {
-        statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);7
-        context.subscriptions.push(statusBarItem);
+        statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);7
+        context.subscriptions.push(statusBar);
     }
 
     const backgroundColor =
-        error ? new vscode.ThemeColor("statusBarItem.errorBackground") :
-        warning ? new vscode.ThemeColor("statusBarItem.warningBackground") : undefined;
+        error ? new vscode.ThemeColor("statusBar.errorBackground") :
+        warning ? new vscode.ThemeColor("statusBar.warningBackground") : undefined;
 
-    statusBarItem.text =(error ? "$(error) " : warning ? "$(warning) " : "") +  "Whack" + (loading ? " $(loading~spin)" : "");
-    statusBarItem.backgroundColor = backgroundColor;
-    statusBarItem.tooltip = message ? message : undefined;
-    statusBarItem.show();
+    statusBar.text = (loading ? " $(loading~spin)" : error ? "$(error) " : warning ? "$(warning) " : "") +  "Whack";
+    statusBar.backgroundColor = backgroundColor;
+    statusBar.tooltip = new vscode.MarkdownString(message);
+    statusBar.tooltip.isTrusted = true;
+    statusBar.show();
 }
 
 // This method is called when your extension is deactivated
