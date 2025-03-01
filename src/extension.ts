@@ -1,6 +1,8 @@
+// Node.js imports
+import path from 'path';
+
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import path from 'path';
 import * as vscode from 'vscode';
 
 // Language client
